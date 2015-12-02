@@ -1,6 +1,8 @@
 package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +14,21 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.exceptions.LayoutNotFoundException;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("all")
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.coord_main_layout) CoordinatorLayout coord_main_layout;
-    @Bind(R.id.bottom_coord_layout) CoordinatorLayout coord_bootom_panel_layout;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.toolbar_bottom_panel) Toolbar toolbar_bottom;
+    @Bind(R.id.coord_main_layout)
+    CoordinatorLayout coord_main_layout;
+    @Bind(R.id.app_bar_layout_bottom)
+    BottomCollapsibleActionBar app_bar_layout_bottom;
+    @Bind(R.id.bottom_coord_layout)
+    CoordinatorLayout coord_bootom_panel_layout;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.toolbar_bottom_panel)
+    Toolbar toolbar_bottom;
     @Bind(R.id.fab) FloatingActionButton fab;
 
     @Override
@@ -27,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
         ButterKnife.bind(this);
+        coord_bootom_panel_layout.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @OnClick(R.id.fab)
@@ -35,15 +46,33 @@ public class MainActivity extends AppCompatActivity {
         if (coord_bootom_panel_layout.getVisibility() == View.GONE) {
             setSupportActionBar(toolbar_bottom);
             coord_bootom_panel_layout.setVisibility(View.VISIBLE);
+            try {
+                app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ATTACHED);
+            } catch (LayoutNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
 
     @Override
     public void onBackPressed() {
         if (coord_bootom_panel_layout.getVisibility() == View.VISIBLE) {
             setSupportActionBar(toolbar);
-            coord_bootom_panel_layout.setVisibility(View.GONE);
+            try {
+                app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
+            } catch (LayoutNotFoundException e) {
+                e.printStackTrace();
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    coord_bootom_panel_layout.setVisibility(View.GONE);
+                }
+            }, 1500);
         }
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
