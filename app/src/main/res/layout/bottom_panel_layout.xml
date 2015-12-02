@@ -23,14 +23,6 @@
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin"
-                app:layout_scrollFlags="exitUntilCollapsed|scroll"
-                android:id="@+id/toolbar_bottom_panel"
-                android:layout_width="match_parent"
-                android:layout_height="96dp" />
-
         </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsingToolbarLayout>
 
     </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsibleActionBar>
