@@ -63,8 +63,8 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     private void setAttachedAppBar() throws LayoutNotFoundException {
         int attachedHeight = (int) screenHeight/2;
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) this.getLayoutParams();
-        AppBarLayout.Behavior behavior = new AppBarLayoutSnapBehavior();
-        behavior.setTopAndBottomOffset(-attachedHeight);
+        AppBarLayoutSnapBehavior behavior = new AppBarLayoutSnapBehavior();
+        behavior.animateOffsetTo(-attachedHeight);
         params.setBehavior(behavior);
         this.setLayoutParams(params);
 

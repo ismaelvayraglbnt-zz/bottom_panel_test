@@ -48,7 +48,7 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
         fakeToolbarLayout.setLayoutParams(lp);
         lp.topMargin = (int)height;
         fakeToolbarLayout.setBackgroundColor(getResources().getColor(R.color.teal_700));
-        fakeToolbarLayout.setElevation(10);
+        fakeToolbarLayout.setElevation(20);
 
         layoutContainer.addView(fakeToolbarLayout,0);
 
@@ -58,7 +58,7 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
 
     public void initRealToolbar() {
         realToolbar = new Toolbar(getContext());
-        AppBarLayout.LayoutParams lp = new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
+        AppBarLayout.LayoutParams lp = new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         realToolbar.setFitsSystemWindows(true);
         lp.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
         CollapsingToolbarLayout.LayoutParams collapsLp = new CollapsingToolbarLayout.LayoutParams(lp);

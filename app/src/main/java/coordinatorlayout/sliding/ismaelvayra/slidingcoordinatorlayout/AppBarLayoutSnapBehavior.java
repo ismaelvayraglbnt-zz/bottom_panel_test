@@ -18,12 +18,7 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
     public AppBarLayoutSnapBehavior() {}
 
-    @Override
-    public boolean setTopAndBottomOffset(int offset) {
-        return super.setTopAndBottomOffset(offset);
-    }
-
-    private void animateOffsetTo(int offset) {
+    public void animateOffsetTo(int offset) {
         if (mAnimator == null) {
             mAnimator = new ValueAnimator();
             mAnimator.setInterpolator(new DecelerateInterpolator());
