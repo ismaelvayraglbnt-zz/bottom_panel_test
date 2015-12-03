@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.AppBarLayoutSnapBehavior;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
@@ -95,7 +93,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     private void setCollapsedAppBar() {
         setExpanded(true, true);
         if (appBarLister!=null) {
-            appBarLister.OnAppBarCollapse();
+            appBarLister.OnAppBarCollapsed();
         }
     }
 
@@ -130,10 +128,5 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         heightMeasureSpec = (int)screenHeight + 300;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
     }
 }

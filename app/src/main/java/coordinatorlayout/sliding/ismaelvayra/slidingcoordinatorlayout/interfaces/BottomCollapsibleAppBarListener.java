@@ -4,7 +4,7 @@ package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interface
  * Created by ismaelvayra on 01/12/15.
  */
 public interface BottomCollapsibleAppBarListener  {
-    void OnAppBarCollapse();
+    void OnAppBarCollapsed();
     void OnAppBarAttached();
     void OnAppBarExpanded();
 }

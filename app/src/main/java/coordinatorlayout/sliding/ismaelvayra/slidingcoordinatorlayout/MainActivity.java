@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 
 @SuppressWarnings("all")
@@ -36,6 +38,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_layout);
         ButterKnife.bind(this);
         coord_bootom_panel_layout.setVisibility(View.GONE);
+        app_bar_layout_bottom.setAppBarLister(new BottomCollapsibleAppBarListener() {
+            @Override
+            public void OnAppBarCollapsed() {
+                Snackbar.make(coord_main_layout, "Lo jui", Snackbar.LENGTH_SHORT);
+            }
+
+            @Override
+            public void OnAppBarAttached() {
+                Snackbar.make(coord_main_layout, "Media asta", Snackbar.LENGTH_SHORT);
+            }
+
+            @Override
+            public void OnAppBarExpanded() {
+                Snackbar.make(coord_main_layout, "Expanded", Snackbar.LENGTH_SHORT);
+            }
+        });
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
