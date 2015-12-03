@@ -2,7 +2,6 @@ package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.exceptions.LayoutNotFoundException;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 
 @SuppressWarnings("all")
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +45,7 @@ public class MainActivity extends AppCompatActivity {
         if (coord_bootom_panel_layout.getVisibility() == View.GONE) {
             setSupportActionBar(toolbar_bottom);
             coord_bootom_panel_layout.setVisibility(View.VISIBLE);
-            try {
-                app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ATTACHED);
-            } catch (LayoutNotFoundException e) {
-                e.printStackTrace();
-            }
+            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ATTACHED);
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
@@ -60,11 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (coord_bootom_panel_layout.getVisibility() == View.VISIBLE) {
             setSupportActionBar(toolbar);
-            try {
-                app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
-            } catch (LayoutNotFoundException e) {
-                e.printStackTrace();
-            }
+            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

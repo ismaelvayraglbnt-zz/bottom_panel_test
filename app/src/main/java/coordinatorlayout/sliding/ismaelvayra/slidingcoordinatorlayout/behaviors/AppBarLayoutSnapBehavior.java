@@ -1,4 +1,4 @@
-package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
+package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.view.animation.DecelerateInterpolator;
 public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
     private ValueAnimator mAnimator;
-    private boolean mNestedScrollStarted = false;
 
     public AppBarLayoutSnapBehavior() {}
 

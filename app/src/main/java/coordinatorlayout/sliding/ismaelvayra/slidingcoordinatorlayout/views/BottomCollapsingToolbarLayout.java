@@ -1,12 +1,16 @@
-package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
+package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.CollapseInterfaceListener;
 
 /**
  * Created by ismaelvayra on 30/11/15.
@@ -16,6 +20,7 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
     private LinearLayout fakeToolbarLayout;
     private Toolbar realToolbar;
     private float height;
+    private CollapseInterfaceListener collapseInterfaceListener;
 
     public BottomCollapsingToolbarLayout(Context context) {
         super(context);
@@ -43,14 +48,27 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
         layoutContainer.setOrientation(LinearLayout.VERTICAL);
         layoutContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
+        LinearLayout layoutSpace = new LinearLayout(getContext());
+        layoutSpace.setId(R.id.layoutSpace);
+        layoutSpace.setClickable(true);
+        layoutSpace.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)height));
+        layoutSpace.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                collapseInterfaceListener.onTouchOutside();
+            }
+        });
+
+
         fakeToolbarLayout = new LinearLayout(getContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         fakeToolbarLayout.setLayoutParams(lp);
-        lp.topMargin = (int)height;
         fakeToolbarLayout.setBackgroundColor(getResources().getColor(R.color.teal_700));
         fakeToolbarLayout.setElevation(20);
+        fakeToolbarLayout.setId(R.id.fake_toolbar);
 
-        layoutContainer.addView(fakeToolbarLayout,0);
+        layoutContainer.addView(layoutSpace);
+        layoutContainer.addView(fakeToolbarLayout);
 
         this.addView(layoutContainer);
 
@@ -70,5 +88,13 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
 
     public LinearLayout getFakeToolbarLayout() {
         return fakeToolbarLayout;
+    }
+
+    public Toolbar getRealToolbar() {
+        return realToolbar;
+    }
+
+    public void setCollapseInterfaceListener(CollapseInterfaceListener collapseInterfaceListener) {
+        this.collapseInterfaceListener = collapseInterfaceListener;
     }
 }

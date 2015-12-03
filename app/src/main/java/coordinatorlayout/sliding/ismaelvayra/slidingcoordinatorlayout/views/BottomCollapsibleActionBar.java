@@ -1,11 +1,15 @@
-package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
+package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 
-import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.exceptions.LayoutNotFoundException;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.AppBarLayoutSnapBehavior;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.CollapseInterfaceListener;
 
 /**
  * Created by ismaelvayra on 01/12/15.
@@ -36,7 +40,6 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     }
 
     private void initItems() {
-        parent = (CoordinatorLayout) this.getParent();
         screenHeight = getResources().getDisplayMetrics().heightPixels;
     }
 
@@ -44,7 +47,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         return state;
     }
 
-    public void setState(appBarState state) throws LayoutNotFoundException {
+    public void setState(appBarState state) {
         switch (state) {
             case ATTACHED:
                 setAttachedAppBar();
@@ -60,7 +63,23 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         this.state = state;
     }
 
-    private void setAttachedAppBar() throws LayoutNotFoundException {
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        if (getChildCount()>0 && getChildAt(0) instanceof BottomCollapsingToolbarLayout) {
+            setCollapsibleSheet((BottomCollapsingToolbarLayout)getChildAt(0));
+            collapsibleSheet.setCollapseInterfaceListener(new CollapseInterfaceListener() {
+                @Override
+                public void onTouchOutside() {
+                    setState(appBarState.COLLAPSED);
+                }
+            });
+        }
+
+        parent = (CoordinatorLayout) this.getParent();
+    }
+
+    private void setAttachedAppBar() {
         int attachedHeight = (int) screenHeight/2;
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) this.getLayoutParams();
         AppBarLayoutSnapBehavior behavior = new AppBarLayoutSnapBehavior();
@@ -73,14 +92,14 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         }
     }
 
-    private void setCollapsedAppBar() throws LayoutNotFoundException {
+    private void setCollapsedAppBar() {
         setExpanded(true, true);
         if (appBarLister!=null) {
             appBarLister.OnAppBarCollapse();
         }
     }
 
-    private void setExpandedAppBar() throws LayoutNotFoundException {
+    private void setExpandedAppBar() {
         setExpanded(true, true);
         if (appBarLister!=null) {
             appBarLister.OnAppBarExpanded();
@@ -111,5 +130,10 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         heightMeasureSpec = (int)screenHeight + 300;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
     }
 }

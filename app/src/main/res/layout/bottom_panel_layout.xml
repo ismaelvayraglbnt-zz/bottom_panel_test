@@ -8,14 +8,14 @@
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsibleActionBar
+    <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar
         android:id="@+id/app_bar_layout_bottom"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         android:background="@android:color/transparent">
 
-        <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsingToolbarLayout
+        <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsingToolbarLayout
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
@@ -23,9 +23,9 @@
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             android:layout_height="wrap_content">
 
-        </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsingToolbarLayout>
+        </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsingToolbarLayout>
 
-    </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.BottomCollapsibleActionBar>
+    </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar>
 
     <include layout="@layout/scroll_panel" />
 
