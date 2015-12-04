@@ -39,6 +39,23 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     private void initItems() {
         screenHeight = getResources().getDisplayMetrics().heightPixels;
+        this.addOnOffsetChangedListener(new OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (appBarLister!=null) {
+                    if (verticalOffset == 0 && !getState().equals(appBarState.ATTACHED)) {
+                        state = appBarState.COLLAPSED;
+                        appBarLister.OnAppBarCollapsed();
+                    } else if (verticalOffset == -(int)screenHeight) {
+                        state = appBarState.EXPANDED;
+                        appBarLister.OnAppBarExpanded();
+                    } else if (verticalOffset == screenHeight/2) {
+                        state = appBarState.ATTACHED;
+                        appBarLister.OnAppBarAttached();
+                    }
+                }
+            }
+        });
     }
 
     public appBarState getState() {
@@ -84,24 +101,14 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         behavior.animateOffsetTo(-attachedHeight);
         params.setBehavior(behavior);
         this.setLayoutParams(params);
-
-        if (appBarLister!=null) {
-            appBarLister.OnAppBarAttached();
-        }
     }
 
     private void setCollapsedAppBar() {
         setExpanded(true, true);
-        if (appBarLister!=null) {
-            appBarLister.OnAppBarCollapsed();
-        }
     }
 
     private void setExpandedAppBar() {
         setExpanded(true, true);
-        if (appBarLister!=null) {
-            appBarLister.OnAppBarExpanded();
-        }
     }
 
     public void collapseToolbar(){

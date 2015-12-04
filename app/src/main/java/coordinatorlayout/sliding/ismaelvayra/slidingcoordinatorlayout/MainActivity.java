@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         app_bar_layout_bottom.setAppBarLister(new BottomCollapsibleAppBarListener() {
             @Override
             public void OnAppBarCollapsed() {
-                Snackbar.make(coord_main_layout, "Lo jui", Snackbar.LENGTH_SHORT);
+                coord_bootom_panel_layout.setVisibility(View.GONE);
             }
 
             @Override
