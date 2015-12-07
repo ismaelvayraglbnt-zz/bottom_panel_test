@@ -1,10 +1,14 @@
-package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 
+package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 
+import java.lang.ref.WeakReference;
+
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.AppBarLayoutSnapBehavior;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.CollapseInterfaceListener;
@@ -14,14 +18,17 @@ import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces
  */
 public class BottomCollapsibleActionBar extends AppBarLayout {
 
-    private CoordinatorLayout parent;
+    private WeakReference<CoordinatorLayout> parent;
     private BottomCollapsingToolbarLayout collapsibleSheet;
     private float screenHeight;
     private BottomCollapsibleAppBarListener appBarLister;
+    private AppBarLayoutSnapBehavior behavior;
+    private CoordinatorLayout.LayoutParams params;
+    private LinearLayout fakeToolbar;
 
     public enum appBarState {
         COLLAPSED,
-        ATTACHED,
+        ANCHORED,
         EXPANDED,
     }
 
@@ -42,16 +49,16 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         this.addOnOffsetChangedListener(new OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (appBarLister!=null) {
-                    if (verticalOffset == 0 && !getState().equals(appBarState.ATTACHED)) {
+                if (appBarLister != null) {
+                    if (verticalOffset == 0 && !getState().equals(appBarState.ANCHORED)) {
                         state = appBarState.COLLAPSED;
-                        appBarLister.OnAppBarCollapsed();
-                    } else if (verticalOffset == -(int)screenHeight) {
+                        appBarLister.onAppBarCollapsed();
+                    } else if (verticalOffset == -(int) screenHeight) {
                         state = appBarState.EXPANDED;
-                        appBarLister.OnAppBarExpanded();
-                    } else if (verticalOffset == screenHeight/2) {
-                        state = appBarState.ATTACHED;
-                        appBarLister.OnAppBarAttached();
+                        appBarLister.onAppBarExpanded();
+                    } else {
+                        state = appBarState.ANCHORED;
+                        appBarLister.onAppBarAttached();
                     }
                 }
             }
@@ -64,7 +71,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     public void setState(appBarState state) {
         switch (state) {
-            case ATTACHED:
+            case ANCHORED:
                 setAttachedAppBar();
                 break;
             case COLLAPSED:
@@ -79,8 +86,8 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+    protected void onAttachedToWindow() {
+        parent = new WeakReference<>((CoordinatorLayout) getParent());
         if (getChildCount()>0 && getChildAt(0) instanceof BottomCollapsingToolbarLayout) {
             setCollapsibleSheet((BottomCollapsingToolbarLayout)getChildAt(0));
             collapsibleSheet.setCollapseInterfaceListener(new CollapseInterfaceListener() {
@@ -91,13 +98,23 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
             });
         }
 
-        parent = (CoordinatorLayout) this.getParent();
+        fakeToolbar = (LinearLayout)collapsibleSheet.findViewById(R.id.fake_toolbar);
+        behavior = new AppBarLayoutSnapBehavior(screenHeight, screenHeight/2, fakeToolbar);
+        behavior.setDragCallback(new Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(AppBarLayout appBarLayout) {
+                if (((BottomCollapsibleActionBar) appBarLayout).getState().equals(appBarState.COLLAPSED)) {
+                    return false;
+                }
+                return true;
+            }
+        });
+        super.onAttachedToWindow();
     }
 
     private void setAttachedAppBar() {
         int attachedHeight = (int) screenHeight/2;
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) this.getLayoutParams();
-        AppBarLayoutSnapBehavior behavior = new AppBarLayoutSnapBehavior();
+        params = (CoordinatorLayout.LayoutParams) this.getLayoutParams();
         behavior.animateOffsetTo(-attachedHeight);
         params.setBehavior(behavior);
         this.setLayoutParams(params);
@@ -133,7 +150,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        heightMeasureSpec = (int)screenHeight + 300;
+        heightMeasureSpec = (int) screenHeight + 300;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -51,15 +52,15 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
         LinearLayout layoutSpace = new LinearLayout(getContext());
         layoutSpace.setId(R.id.layoutSpace);
         layoutSpace.setClickable(true);
-        layoutSpace.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)height));
-        layoutSpace.setOnClickListener(new OnClickListener() {
+        layoutSpace.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height));
+        layoutSpace.setOnTouchListener(new OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 collapseInterfaceListener.onTouchOutside();
+                return true;
             }
         });
-
-
+        
         fakeToolbarLayout = new LinearLayout(getContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         fakeToolbarLayout.setLayoutParams(lp);

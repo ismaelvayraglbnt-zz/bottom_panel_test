@@ -40,17 +40,17 @@ public class MainActivity extends AppCompatActivity {
         coord_bootom_panel_layout.setVisibility(View.GONE);
         app_bar_layout_bottom.setAppBarLister(new BottomCollapsibleAppBarListener() {
             @Override
-            public void OnAppBarCollapsed() {
-                coord_bootom_panel_layout.setVisibility(View.GONE);
+            public void onAppBarCollapsed() {
+//                coord_bootom_panel_layout.setVisibility(View.GONE);
             }
 
             @Override
-            public void OnAppBarAttached() {
+            public void onAppBarAttached() {
                 Snackbar.make(coord_main_layout, "Media asta", Snackbar.LENGTH_SHORT);
             }
 
             @Override
-            public void OnAppBarExpanded() {
+            public void onAppBarExpanded() {
                 Snackbar.make(coord_main_layout, "Expanded", Snackbar.LENGTH_SHORT);
             }
         });
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         if (coord_bootom_panel_layout.getVisibility() == View.GONE) {
             setSupportActionBar(toolbar_bottom);
             coord_bootom_panel_layout.setVisibility(View.VISIBLE);
-            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ATTACHED);
+            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
