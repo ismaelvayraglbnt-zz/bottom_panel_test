@@ -99,7 +99,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         }
 
         fakeToolbar = (LinearLayout)collapsibleSheet.findViewById(R.id.fake_toolbar);
-        behavior = new AppBarLayoutSnapBehavior(screenHeight, screenHeight/2, fakeToolbar, this);
+        behavior = new AppBarLayoutSnapBehavior(screenHeight/2);
         behavior.setDragCallback(new Behavior.DragCallback() {
             @Override
             public boolean canDrag(AppBarLayout appBarLayout) {
@@ -126,14 +126,6 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     private void setExpandedAppBar() {
         setExpanded(false, true);
-    }
-
-    public void collapseToolbar(){
-        this.setExpanded(false, true);
-    }
-
-    public void expandToolbar(){
-        this.setExpanded(true, false);
     }
 
     public void setAppBarLister(BottomCollapsibleAppBarListener appBarLister) {
