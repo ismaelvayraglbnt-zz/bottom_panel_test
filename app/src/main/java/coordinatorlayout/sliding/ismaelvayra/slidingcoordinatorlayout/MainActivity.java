@@ -68,18 +68,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-
     @Override
     public void onBackPressed() {
         if (coord_bootom_panel_layout.getVisibility() == View.VISIBLE) {
             setSupportActionBar(toolbar);
-            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    coord_bootom_panel_layout.setVisibility(View.GONE);
-                }
-            }, 1500);
+            app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    coord_bootom_panel_layout.setVisibility(View.GONE);
+//                }
+//            }, 1500);
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }

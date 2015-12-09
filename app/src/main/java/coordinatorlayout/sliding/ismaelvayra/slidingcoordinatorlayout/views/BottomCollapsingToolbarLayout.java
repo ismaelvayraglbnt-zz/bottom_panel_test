@@ -60,7 +60,7 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
                 return true;
             }
         });
-        
+
         fakeToolbarLayout = new LinearLayout(getContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         fakeToolbarLayout.setLayoutParams(lp);
@@ -82,8 +82,8 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
         lp.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
         CollapsingToolbarLayout.LayoutParams collapsLp = new CollapsingToolbarLayout.LayoutParams(lp);
         collapsLp.setCollapseMode(LayoutParams.COLLAPSE_MODE_PIN);
-        realToolbar.setLayoutParams(collapsLp);
         realToolbar.setId(R.id.toolbar_bottom_panel);
+        realToolbar.setLayoutParams(collapsLp);
         this.addView(realToolbar);
     }
 
