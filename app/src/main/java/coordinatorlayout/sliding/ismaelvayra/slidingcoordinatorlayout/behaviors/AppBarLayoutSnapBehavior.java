@@ -18,10 +18,12 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
     private float anchoredPoint;
     private float anchorPointRangeOver;
     private boolean mNestedScrollStarted = false;
+    private float screenHeight;
 
-    public AppBarLayoutSnapBehavior(float anchoredPoint) {
+    public AppBarLayoutSnapBehavior(float anchoredPoint, float screen) {
+        screenHeight = screen;
         this.anchoredPoint = anchoredPoint;
-        anchorPointRangeOver = anchoredPoint + (anchoredPoint /2);
+        anchorPointRangeOver = anchoredPoint + (anchoredPoint /4);
     }
 
     public void animateOffsetTo(int offset) {
@@ -49,7 +51,6 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
         switch (ev.getActionMasked()) {
 
             case MotionEvent.ACTION_UP:
-                appBar.stopNestedScroll();
                 yPosition = Math.abs(this.getTopAndBottomOffset());
                 if (yPosition>=anchoredPoint && yPosition<anchorPointRangeOver) {
                     appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
@@ -85,11 +86,11 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
         int yPosition = Math.abs(this.getTopAndBottomOffset());
 
-        if (yPosition>=anchoredPoint && yPosition<anchorPointRangeOver) {
-            appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
-        } else if (yPosition>=anchorPointRangeOver) {
+        if (yPosition>anchoredPoint && yPosition<anchorPointRangeOver) {
+                appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
+        } else if (yPosition>anchorPointRangeOver && yPosition!=screenHeight) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.EXPANDED);
-        } else if (yPosition<anchoredPoint) {
+        } else if (yPosition<anchoredPoint && yPosition!=0) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
         }
     }

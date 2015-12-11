@@ -3,6 +3,7 @@ package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -62,7 +63,7 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
         });
 
         fakeToolbarLayout = new LinearLayout(getContext());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         fakeToolbarLayout.setLayoutParams(lp);
         fakeToolbarLayout.setBackgroundColor(getResources().getColor(R.color.teal_700));
         fakeToolbarLayout.setElevation(20);
