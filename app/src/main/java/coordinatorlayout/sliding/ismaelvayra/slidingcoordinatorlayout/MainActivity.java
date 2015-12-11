@@ -1,7 +1,6 @@
 package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar;
 
 @SuppressWarnings("all")
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.toolbar_bottom_panel)
-    Toolbar toolbar_bottom;
+    BottomToolbar toolbar_bottom;
     @Bind(R.id.fab) FloatingActionButton fab;
 
     @Override

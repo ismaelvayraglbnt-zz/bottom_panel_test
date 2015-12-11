@@ -94,4 +94,24 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
             appBar.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
         }
     }
+
+    @Override
+    public boolean onLayoutChild(CoordinatorLayout parent, AppBarLayout abl, int layoutDirection) {
+        return super.onLayoutChild(parent, abl, layoutDirection);
+    }
+
+    @Override
+    public boolean layoutDependsOn(CoordinatorLayout parent, AppBarLayout child, View dependency) {
+        return super.layoutDependsOn(parent, child, dependency);
+    }
+
+    @Override
+    public boolean onDependentViewChanged(CoordinatorLayout parent, AppBarLayout child, View dependency) {
+        return super.onDependentViewChanged(parent, child, dependency);
+    }
+
+    @Override
+    public void onDependentViewRemoved(CoordinatorLayout parent, AppBarLayout child, View dependency) {
+        super.onDependentViewRemoved(parent, child, dependency);
+    }
 }
