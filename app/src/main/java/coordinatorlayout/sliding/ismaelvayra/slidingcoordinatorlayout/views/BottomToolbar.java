@@ -10,17 +10,30 @@ import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.
 /**
  * Created by ismaelvayra on 11/12/15.
  */
-@CoordinatorLayout.DefaultBehavior(ToolbarCustomBehavior.class)
+//@CoordinatorLayout.DefaultBehavior(ToolbarCustomBehavior.class)
 public class BottomToolbar extends Toolbar {
+
+    ToolbarCustomBehavior toolBehavior;
+
     public BottomToolbar(Context context) {
         super(context);
     }
 
     public BottomToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initToolbar();
     }
 
     public BottomToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initToolbar();
+    }
+
+    private void initToolbar() {
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
     }
 }

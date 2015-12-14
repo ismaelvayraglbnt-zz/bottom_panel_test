@@ -114,4 +114,8 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
     public void onDependentViewRemoved(CoordinatorLayout parent, AppBarLayout child, View dependency) {
         super.onDependentViewRemoved(parent, child, dependency);
     }
+
+    public float getAbsoluteTopBottomOffset() {
+        return Math.abs(getTopAndBottomOffset());
+    }
 }
