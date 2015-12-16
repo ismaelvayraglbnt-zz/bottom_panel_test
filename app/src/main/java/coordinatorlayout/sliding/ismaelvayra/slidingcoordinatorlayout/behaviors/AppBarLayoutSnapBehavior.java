@@ -86,11 +86,16 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
     @Override
     public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed) {
+
         return false;
     }
 
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY) {
-        return false;
+        BottomCollapsibleActionBar bottomCollapsibleActionBar = (BottomCollapsibleActionBar) child;
+        if (bottomCollapsibleActionBar.getState().equals(BottomCollapsibleActionBar.appBarState.EXPANDED)) {
+            return false;
+        }
+        return true;
     }
 }
