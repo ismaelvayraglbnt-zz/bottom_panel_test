@@ -140,9 +140,14 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         this.collapsibleSheet = collapsibleSheet;
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        heightMeasureSpec = (int) screenHeight + 300;
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        heightMeasureSpec = (int) screenHeight + 300;
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//    }
+
+
+    public AppBarLayoutSnapBehavior getBehavior() {
+        return behavior;
     }
 }

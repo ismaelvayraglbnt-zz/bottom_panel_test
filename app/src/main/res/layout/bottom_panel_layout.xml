@@ -28,23 +28,41 @@
         </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsingToolbarLayout>
 
     </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar>
-
-    <include layout="@layout/scroll_panel" android:id="@+id/scroll_goffre"/>
-    <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar
-        android:id="@id/toolbar_bottom_panel"
-        android:elevation="10dp"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:layout_anchor="@id/scroll_goffre"
-        android:background="@color/toolbar"
+    
+    <RelativeLayout
         app:layout_behavior="coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.ToolbarCustomBehavior"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content">
 
-    </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar>
-    <RelativeLayout
-        android:background="@color/teal_700"
-        app:layout_anchor="@id/scroll_goffre"
-        android:layout_width="match_parent"
-        android:layout_height="80dp" />
+        <include layout="@layout/scroll_panel" android:id="@+id/scroll_goffre"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@id/fake_toolbar"
+                android:elevation="10dp"
+                android:background="@color/teal_700"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+            <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar
+                android:id="@id/toolbar_bottom_panel"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:background="@color/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+
+
+        </FrameLayout>
+
+
+
+
+    </RelativeLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

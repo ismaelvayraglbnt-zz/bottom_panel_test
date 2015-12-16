@@ -8,9 +8,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar;
 
@@ -18,12 +20,13 @@ import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.Bott
  * Created by ismaelvayra on 11/12/15.
  */
 @SuppressWarnings("unused")
-public class ToolbarCustomBehavior extends CoordinatorLayout.Behavior<Toolbar> {
+public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     private Context ctx;
     private float screenSizeHeight;
     private float toolbarHeight;
     private float startPoint;
+    private float endPoint;
 
     public ToolbarCustomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,38 +39,54 @@ public class ToolbarCustomBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, Toolbar child, View dependency) {
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
         if (startPoint==0) {
             toolbarHeight = child.getLayoutParams().height;
             startPoint = screenSizeHeight/2;
+            endPoint = screenSizeHeight/2 + screenSizeHeight/4;
 //            startPoint = toolbarHeight+toolbarHeight/2;
         }
-        return dependency instanceof NestedScrollView;
+        return dependency instanceof BottomCollapsibleActionBar;
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, Toolbar child, View dependency) {
-        if (dependency instanceof NestedScrollView) {
-            if (dependency.getY()<=startPoint && dependency.getY()>100) {
-                child.setAlpha(1-getScaledForAlpha(dependency.getY()));
-            } else if (dependency.getY()>startPoint) {
-                child.setAlpha(0);
-            } else if (dependency.getY() <= 100) {
-                child.setAlpha(1);
-            }
+    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
+        if (dependency instanceof BottomCollapsibleActionBar) {
+            float dependencyY = Math.abs(dependency.getY());
+            View customToolbar = child.findViewById(R.id.fake_toolbar);
+////            if (dependencyY>(startPoint+100f) && dependencyY<=screenSizeHeight) {
+////                float alpha = 1-getScaledForAlpha(dependencyY);
+////                customToolbar.setAlpha(alpha);
+////            } else if (dependencyY<=startPoint) {
+////                customToolbar.setAlpha(1);
+////            }
+//
+//            if (dependencyY>=startPoint && dependencyY<=endPoint) {
+//                float alpha = 1-getScaledForAlpha(dependencyY);
+//                customToolbar.setAlpha(alpha);
+//            }
+            customToolbar.setAlpha(getScaledForAlpha(dependencyY));
 
-            return true;
         }
-        return false;
+        return super.onDependentViewChanged(parent, child, dependency);
     }
 
     @Override
-    public void onDependentViewRemoved(CoordinatorLayout parent, Toolbar child, View dependency) {
-        super.onDependentViewRemoved(parent, child, dependency);
+    public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
+        return super.onLayoutChild(parent, child, layoutDirection);
     }
 
     private float getScaledForAlpha(float position) {
-        return position/startPoint;
+        float alpha;
+        if (position<startPoint) {
+            alpha = 1;
+        } else if (position >= startPoint && position <= endPoint) {
+            alpha = 1-(1/(endPoint-startPoint))*position +startPoint/(endPoint-startPoint);
+        } else {
+            alpha = 0;
+        }
+
+        return alpha;
     }
 
 }
