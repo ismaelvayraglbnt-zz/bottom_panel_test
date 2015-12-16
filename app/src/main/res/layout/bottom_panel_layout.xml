@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp" />
 
-            <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar
+            <android.support.v7.widget.Toolbar
                 android:id="@id/toolbar_bottom_panel"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:background="@color/toolbar"

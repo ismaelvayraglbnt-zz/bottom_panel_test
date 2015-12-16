@@ -1,20 +1,13 @@
 package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RelativeLayout;
-
-import java.lang.ref.WeakReference;
 
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
-import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar;
 
 /**
  * Created by ismaelvayra on 11/12/15.

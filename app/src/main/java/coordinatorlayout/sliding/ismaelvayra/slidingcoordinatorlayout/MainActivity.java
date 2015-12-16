@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
-import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomToolbar;
 
 @SuppressWarnings("all")
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.toolbar_bottom_panel)
-    BottomToolbar toolbar_bottom;
+    Toolbar toolbar_bottom;
     @Bind(R.id.fab) FloatingActionButton fab;
 
     @Override
