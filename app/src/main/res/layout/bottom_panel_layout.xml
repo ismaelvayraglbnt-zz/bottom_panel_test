@@ -6,6 +6,7 @@
     android:id="@+id/bottom_coord_layout"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    app:layout_behavior="coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.CoordinatorLayoutMasterBehavior"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar
@@ -27,7 +28,34 @@
         </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsingToolbarLayout>
 
     </coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar>
+    
+    <RelativeLayout
+        app:layout_behavior="coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.ToolbarCustomBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/scroll_panel" />
+        <include layout="@layout/scroll_panel" android:id="@+id/scroll_goffre"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:elevation="10dp"
+                android:id="@id/fake_toolbar"
+                android:background="@color/teal_700"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@id/toolbar_bottom_panel"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:background="@color/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

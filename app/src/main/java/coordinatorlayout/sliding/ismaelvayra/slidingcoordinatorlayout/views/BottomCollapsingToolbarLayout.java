@@ -62,30 +62,30 @@ public class BottomCollapsingToolbarLayout extends CollapsingToolbarLayout {
             }
         });
 
-        fakeToolbarLayout = new LinearLayout(getContext());
-        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
-        fakeToolbarLayout.setLayoutParams(lp);
-        fakeToolbarLayout.setBackgroundColor(getResources().getColor(R.color.teal_700));
-        fakeToolbarLayout.setElevation(20);
-        fakeToolbarLayout.setId(R.id.fake_toolbar);
+//        fakeToolbarLayout = new LinearLayout(getContext());
+//        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+//        fakeToolbarLayout.setLayoutParams(lp);
+//        fakeToolbarLayout.setBackgroundColor(getResources().getColor(R.color.teal_700));
+//        fakeToolbarLayout.setElevation(20);
+//        fakeToolbarLayout.setId(R.id.fake_toolbar);
 
         layoutContainer.addView(layoutSpace);
-        layoutContainer.addView(fakeToolbarLayout);
+//        layoutContainer.addView(fakeToolbarLayout);
 
         this.addView(layoutContainer);
 
     }
 
     public void initRealToolbar() {
-        realToolbar = new Toolbar(getContext());
-        AppBarLayout.LayoutParams lp = new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
-        realToolbar.setFitsSystemWindows(true);
-        lp.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
-        CollapsingToolbarLayout.LayoutParams collapsLp = new CollapsingToolbarLayout.LayoutParams(lp);
-        collapsLp.setCollapseMode(LayoutParams.COLLAPSE_MODE_PIN);
-        realToolbar.setId(R.id.toolbar_bottom_panel);
-        realToolbar.setLayoutParams(collapsLp);
-        this.addView(realToolbar);
+//        realToolbar = new Toolbar(getContext());
+//        AppBarLayout.LayoutParams lp = new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+//        realToolbar.setFitsSystemWindows(true);
+//        lp.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
+//        CollapsingToolbarLayout.LayoutParams collapsLp = new CollapsingToolbarLayout.LayoutParams(lp);
+//        collapsLp.setCollapseMode(LayoutParams.COLLAPSE_MODE_PIN);
+//        realToolbar.setId(R.id.toolbar_bottom_panel);
+//        realToolbar.setLayoutParams(collapsLp);
+//        this.addView(realToolbar);
     }
 
     public LinearLayout getFakeToolbarLayout() {
