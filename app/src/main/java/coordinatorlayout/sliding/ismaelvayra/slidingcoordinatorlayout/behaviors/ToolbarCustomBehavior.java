@@ -1,5 +1,6 @@
 package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,9 +18,10 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     private Context ctx;
     private float screenSizeHeight;
-    private float toolbarHeight;
+    private boolean mNestedScrollStarted = false;
     private float startPoint;
     private float endPoint;
+    private ValueAnimator mAnimator;
 
     public ToolbarCustomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,15 +31,12 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     private void initBehavior() {
         screenSizeHeight = ctx.getResources().getDisplayMetrics().heightPixels;
+        startPoint = screenSizeHeight/2;
+        endPoint = screenSizeHeight/2 + screenSizeHeight/4;
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        if (startPoint==0) {
-            toolbarHeight = child.getLayoutParams().height;
-            startPoint = screenSizeHeight/2;
-            endPoint = screenSizeHeight/2 + screenSizeHeight/4;
-        }
         return dependency instanceof BottomCollapsibleActionBar;
     }
 
@@ -47,8 +46,8 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
             float dependencyY = Math.abs(dependency.getY());
             View customToolbar = child.findViewById(R.id.fake_toolbar);
             customToolbar.setAlpha(getScaledForAlpha(dependencyY));
-
         }
+
         return super.onDependentViewChanged(parent, child, dependency);
     }
 
@@ -58,6 +57,7 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
     }
 
     private float getScaledForAlpha(float position) {
+
         float alpha;
         if (position<startPoint) {
             alpha = 1;
@@ -68,6 +68,11 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
         }
 
         return alpha;
+    }
+
+    @Override
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        return true;
     }
 
 }

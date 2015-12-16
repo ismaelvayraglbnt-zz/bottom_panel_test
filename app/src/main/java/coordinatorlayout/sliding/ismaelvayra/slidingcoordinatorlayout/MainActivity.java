@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAppBarAttached() {
+            public void onAppBarAnchored() {
                 Snackbar.make(coord_main_layout, "Media asta", Snackbar.LENGTH_SHORT);
             }
 
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     public void fabClick() {
         if (coord_bootom_panel_layout.getVisibility() == View.GONE) {
             setSupportActionBar(toolbar_bottom);
-            coord_bootom_panel_layout.setVisibility(View.VISIBLE);
             app_bar_layout_bottom.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
         }
         getSupportActionBar().setDisplayShowTitleEnabled(false);

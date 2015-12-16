@@ -6,6 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.RelativeLayout;
 
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 
@@ -46,32 +47,16 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
-        BottomCollapsibleActionBar appBar = (BottomCollapsibleActionBar) child;
-        float yPosition;
-        switch (ev.getActionMasked()) {
-
-            case MotionEvent.ACTION_UP:
-                yPosition = Math.abs(this.getTopAndBottomOffset());
-                if (yPosition>=anchoredPoint && yPosition<anchorPointRangeOver) {
-                    appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
-                } else if (yPosition>=anchorPointRangeOver) {
-                    appBar.setState(BottomCollapsibleActionBar.appBarState.EXPANDED);
-                } else if (yPosition<anchoredPoint) {
-                    appBar.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);
-                }
-                break;
-        }
-        parent.invalidate();
-        return super.onTouchEvent(parent, child, ev);
+        return false;
     }
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View directTargetChild, View target, int nestedScrollAxes) {
         mNestedScrollStarted = super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
-        if(mNestedScrollStarted && mAnimator != null){ // Condition: (if) we scroll &and& our ValueAnimator object is NOT null, aka it exists, then and only then we cancel the animation.
+        if(mNestedScrollStarted && mAnimator != null){
             mAnimator.cancel();
         }
-        return  mNestedScrollStarted; /* Factory return */
+        return  mNestedScrollStarted;
     }
 
     @Override
@@ -85,9 +70,8 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
         mNestedScrollStarted = false;
 
         int yPosition = Math.abs(this.getTopAndBottomOffset());
-
         if (yPosition>anchoredPoint && yPosition<anchorPointRangeOver) {
-                appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
+            appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
         } else if (yPosition>anchorPointRangeOver && yPosition!=screenHeight) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.EXPANDED);
         } else if (yPosition<anchoredPoint && yPosition!=0) {
@@ -96,26 +80,17 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
     }
 
     @Override
-    public boolean onLayoutChild(CoordinatorLayout parent, AppBarLayout abl, int layoutDirection) {
-        return super.onLayoutChild(parent, abl, layoutDirection);
-    }
-
-    @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, AppBarLayout child, View dependency) {
-        return super.layoutDependsOn(parent, child, dependency);
-    }
-
-    @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, AppBarLayout child, View dependency) {
-        return super.onDependentViewChanged(parent, child, dependency);
-    }
-
-    @Override
     public void onDependentViewRemoved(CoordinatorLayout parent, AppBarLayout child, View dependency) {
         super.onDependentViewRemoved(parent, child, dependency);
     }
 
-    public float getAbsoluteTopBottomOffset() {
-        return Math.abs(getTopAndBottomOffset());
+    @Override
+    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed) {
+        return false;
+    }
+
+    @Override
+    public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY) {
+        return false;
     }
 }

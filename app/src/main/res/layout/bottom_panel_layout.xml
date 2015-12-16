@@ -41,8 +41,8 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@id/fake_toolbar"
                 android:elevation="10dp"
+                android:id="@id/fake_toolbar"
                 android:background="@color/teal_700"
                 android:layout_width="match_parent"
                 android:layout_height="80dp" />
@@ -54,15 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp" />
 
-
-
         </FrameLayout>
 
-
-
-
     </RelativeLayout>
-
-
 
 </android.support.design.widget.CoordinatorLayout>

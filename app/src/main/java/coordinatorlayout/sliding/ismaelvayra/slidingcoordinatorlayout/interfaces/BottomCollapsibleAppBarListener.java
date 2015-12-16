@@ -5,6 +5,6 @@ package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interface
  */
 public interface BottomCollapsibleAppBarListener  {
     void onAppBarCollapsed();
-    void onAppBarAttached();
+    void onAppBarAnchored();
     void onAppBarExpanded();
 }
