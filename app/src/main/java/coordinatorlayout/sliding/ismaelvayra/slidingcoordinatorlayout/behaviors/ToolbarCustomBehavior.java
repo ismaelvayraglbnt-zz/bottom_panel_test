@@ -44,7 +44,6 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
             toolbarHeight = child.getLayoutParams().height;
             startPoint = screenSizeHeight/2;
             endPoint = screenSizeHeight/2 + screenSizeHeight/4;
-//            startPoint = toolbarHeight+toolbarHeight/2;
         }
         return dependency instanceof BottomCollapsibleActionBar;
     }
@@ -54,17 +53,6 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
         if (dependency instanceof BottomCollapsibleActionBar) {
             float dependencyY = Math.abs(dependency.getY());
             View customToolbar = child.findViewById(R.id.fake_toolbar);
-////            if (dependencyY>(startPoint+100f) && dependencyY<=screenSizeHeight) {
-////                float alpha = 1-getScaledForAlpha(dependencyY);
-////                customToolbar.setAlpha(alpha);
-////            } else if (dependencyY<=startPoint) {
-////                customToolbar.setAlpha(1);
-////            }
-//
-//            if (dependencyY>=startPoint && dependencyY<=endPoint) {
-//                float alpha = 1-getScaledForAlpha(dependencyY);
-//                customToolbar.setAlpha(alpha);
-//            }
             customToolbar.setAlpha(getScaledForAlpha(dependencyY));
 
         }
