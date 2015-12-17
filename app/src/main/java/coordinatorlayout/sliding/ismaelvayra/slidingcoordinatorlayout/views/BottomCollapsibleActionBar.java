@@ -74,6 +74,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
                         state = appBarState.EXPANDED;
                         appBarLister.onAppBarExpanded();
                     } else if (appBar.getBehavior().getAbsoluteOffset() == (int) anchorPoint) {
+                        // TODO: fix this part, never enter here
                         state = appBarState.ANCHORED;
                         appBarLister.onAppBarAnchored();
                     }
@@ -180,4 +181,6 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     public float getEndAnimationPoint() {
         return endAnimationPoint;
     }
+
+    // TODO: fix on touch outside when drag
 }
