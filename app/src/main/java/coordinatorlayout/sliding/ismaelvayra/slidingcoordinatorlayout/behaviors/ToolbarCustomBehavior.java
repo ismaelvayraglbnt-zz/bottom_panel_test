@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.utils.BottomSheetUtils;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 
 /**
@@ -45,7 +46,7 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
         if (dependency instanceof BottomCollapsibleActionBar) {
             float dependencyY = Math.abs(dependency.getY());
             View customToolbar = child.findViewById(R.id.fake_toolbar);
-            customToolbar.setAlpha(getScaledForAlpha(dependencyY));
+            customToolbar.setAlpha(BottomSheetUtils.getScaledAlpha(dependencyY, startPoint, endPoint));
         }
 
         return super.onDependentViewChanged(parent, child, dependency);
@@ -54,20 +55,6 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         return super.onLayoutChild(parent, child, layoutDirection);
-    }
-
-    private float getScaledForAlpha(float position) {
-
-        float alpha;
-        if (position<startPoint) {
-            alpha = 1;
-        } else if (position >= startPoint && position <= endPoint) {
-            alpha = 1-(1/(endPoint-startPoint))*position +startPoint/(endPoint-startPoint);
-        } else {
-            alpha = 0;
-        }
-
-        return alpha;
     }
 
     @Override

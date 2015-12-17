@@ -45,6 +45,10 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
         mAnimator.start();
     }
 
+    public boolean isScrolling() {
+        return mAnimator!=null && mAnimator.isRunning();
+    }
+
     @Override
     public boolean onTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
         return false;
@@ -97,5 +101,9 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
             return false;
         }
         return true;
+    }
+
+    public int getAbsoluteOffset() {
+        return Math.abs(getTopAndBottomOffset());
     }
 }

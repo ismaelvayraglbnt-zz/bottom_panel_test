@@ -23,6 +23,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     private BottomCollapsibleAppBarListener appBarLister;
     private AppBarLayoutSnapBehavior behavior;
     private CoordinatorLayout.LayoutParams params;
+    private float anchorPoint;
 
     public enum appBarState {
         COLLAPSED,
@@ -47,21 +48,25 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
         this.addOnOffsetChangedListener(new OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                BottomCollapsibleActionBar appBar = (BottomCollapsibleActionBar) appBarLayout;
                 if (appBarLister != null) {
-                    if (verticalOffset == 0 && !getState().equals(appBarState.ANCHORED)) {
+                    if (appBar.getBehavior().getAbsoluteOffset() == 0 && !getState().equals(appBarState.ANCHORED)) {
                         state = appBarState.COLLAPSED;
                         coordParent.get().setVisibility(GONE);
                         appBarLister.onAppBarCollapsed();
-                    } else if (verticalOffset == -(int) screenHeight) {
+                    } else if (appBar.getBehavior().getAbsoluteOffset() == (int) screenHeight) {
                         state = appBarState.EXPANDED;
                         appBarLister.onAppBarExpanded();
-                    } else {
+                    } else if (appBar.getBehavior().getAbsoluteOffset() == (int)anchorPoint) {
                         state = appBarState.ANCHORED;
                         appBarLister.onAppBarAnchored();
                     }
                 }
             }
         });
+
+        anchorPoint = (int) screenHeight/2;
     }
 
     public appBarState getState() {
@@ -115,9 +120,8 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     private void setAttachedAppBar() {
         state = appBarState.ANCHORED;
-        int attachedHeight = (int) screenHeight/2;
         params = (CoordinatorLayout.LayoutParams) this.getLayoutParams();
-        behavior.animateOffsetTo(-attachedHeight);
+        behavior.animateOffsetTo(-(int)anchorPoint);
         params.setBehavior(behavior);
         this.setLayoutParams(params);
     }
