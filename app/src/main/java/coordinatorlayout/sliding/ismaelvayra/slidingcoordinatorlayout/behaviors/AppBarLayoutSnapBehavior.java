@@ -6,7 +6,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.RelativeLayout;
 
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views.BottomCollapsibleActionBar;
 
@@ -17,14 +16,14 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
 
     private ValueAnimator mAnimator;
     private float anchoredPoint;
-    private float anchorPointRangeOver;
+    private float endAnimationPoint;
     private boolean mNestedScrollStarted = false;
     private float screenHeight;
 
-    public AppBarLayoutSnapBehavior(float anchoredPoint, float screen) {
+    public AppBarLayoutSnapBehavior(float anchoredPoint, float endAnimationPoint, float screen) {
         screenHeight = screen;
         this.anchoredPoint = anchoredPoint;
-        anchorPointRangeOver = anchoredPoint + (anchoredPoint /4);
+        this.endAnimationPoint = endAnimationPoint;
     }
 
     public void animateOffsetTo(int offset) {
@@ -74,9 +73,9 @@ public class AppBarLayoutSnapBehavior extends AppBarLayout.Behavior {
         mNestedScrollStarted = false;
 
         int yPosition = Math.abs(this.getTopAndBottomOffset());
-        if (yPosition>anchoredPoint && yPosition<anchorPointRangeOver) {
+        if (yPosition>anchoredPoint && yPosition< endAnimationPoint) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.ANCHORED);
-        } else if (yPosition>anchorPointRangeOver && yPosition!=screenHeight) {
+        } else if (yPosition> endAnimationPoint && yPosition!=screenHeight) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.EXPANDED);
         } else if (yPosition<anchoredPoint && yPosition!=0) {
             appBar.setState(BottomCollapsibleActionBar.appBarState.COLLAPSED);

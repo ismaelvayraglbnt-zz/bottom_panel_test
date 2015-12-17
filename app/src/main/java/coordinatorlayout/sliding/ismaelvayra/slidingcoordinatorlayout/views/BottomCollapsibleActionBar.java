@@ -1,13 +1,16 @@
 
 package coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.views;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 
 import java.lang.ref.WeakReference;
 
+import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.R;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.behaviors.AppBarLayoutSnapBehavior;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.BottomCollapsibleAppBarListener;
 import coordinatorlayout.sliding.ismaelvayra.slidingcoordinatorlayout.interfaces.CollapseInterfaceListener;
@@ -24,6 +27,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
     private AppBarLayoutSnapBehavior behavior;
     private CoordinatorLayout.LayoutParams params;
     private float anchorPoint;
+    private float endAnimationPoint;
 
     public enum appBarState {
         COLLAPSED,
@@ -35,16 +39,27 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     public BottomCollapsibleActionBar(Context context) {
         super(context);
-        initItems();
+        initItems(null);
     }
 
     public BottomCollapsibleActionBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initItems();
+        initItems(attrs);
     }
 
-    private void initItems() {
+    private void initItems(@Nullable AttributeSet attrs) {
+
         screenHeight = getResources().getDisplayMetrics().heightPixels;
+
+        if (attrs!=null) {
+            TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.BottomCollapsibleActionBar);
+            anchorPoint = attributes.getDimension(R.styleable.BottomCollapsibleActionBar_anchor_point, screenHeight/2);
+            endAnimationPoint = attributes.getDimension(R.styleable.BottomCollapsibleActionBar_end_animation_point, (screenHeight/2+screenHeight/4));
+        } else {
+            anchorPoint = screenHeight/2;
+            endAnimationPoint = screenHeight/2+screenHeight/4;
+        }
+
         this.addOnOffsetChangedListener(new OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -58,15 +73,13 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
                     } else if (appBar.getBehavior().getAbsoluteOffset() == (int) screenHeight) {
                         state = appBarState.EXPANDED;
                         appBarLister.onAppBarExpanded();
-                    } else if (appBar.getBehavior().getAbsoluteOffset() == (int)anchorPoint) {
+                    } else if (appBar.getBehavior().getAbsoluteOffset() == (int) anchorPoint) {
                         state = appBarState.ANCHORED;
                         appBarLister.onAppBarAnchored();
                     }
                 }
             }
         });
-
-        anchorPoint = (int) screenHeight/2;
     }
 
     public appBarState getState() {
@@ -104,7 +117,7 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
             });
         }
 
-        behavior = new AppBarLayoutSnapBehavior(screenHeight/2, screenHeight);
+        behavior = new AppBarLayoutSnapBehavior(anchorPoint, endAnimationPoint, screenHeight);
 
 
         behavior.setDragCallback(new Behavior.DragCallback() {
@@ -150,5 +163,21 @@ public class BottomCollapsibleActionBar extends AppBarLayout {
 
     public AppBarLayoutSnapBehavior getBehavior() {
         return behavior;
+    }
+
+    public float getAnchorPoint() {
+        return anchorPoint;
+    }
+
+    public void setAnchorPoint(float anchorPoint) {
+        this.anchorPoint = anchorPoint;
+    }
+
+    public void setEndAnimationPoint(float endAnimationPoint) {
+        this.endAnimationPoint = endAnimationPoint;
+    }
+
+    public float getEndAnimationPoint() {
+        return endAnimationPoint;
     }
 }

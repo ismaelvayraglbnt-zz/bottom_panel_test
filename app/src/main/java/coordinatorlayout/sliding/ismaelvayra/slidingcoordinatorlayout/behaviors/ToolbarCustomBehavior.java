@@ -32,13 +32,21 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     private void initBehavior() {
         screenSizeHeight = ctx.getResources().getDisplayMetrics().heightPixels;
-        startPoint = screenSizeHeight/2;
-        endPoint = screenSizeHeight/2 + screenSizeHeight/4;
+//        startPoint = screenSizeHeight/2;
+//        endPoint = screenSizeHeight/2 + screenSizeHeight/4;
     }
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        return dependency instanceof BottomCollapsibleActionBar;
+
+        boolean isBottomCollapsibleChild = dependency instanceof BottomCollapsibleActionBar;
+        if(isBottomCollapsibleChild && (startPoint==0 || endPoint==0)) {
+            BottomCollapsibleActionBar appBar = (BottomCollapsibleActionBar) dependency;
+            startPoint = appBar.getAnchorPoint();
+            endPoint = appBar.getEndAnimationPoint();
+        }
+
+        return isBottomCollapsibleChild;
     }
 
     @Override
