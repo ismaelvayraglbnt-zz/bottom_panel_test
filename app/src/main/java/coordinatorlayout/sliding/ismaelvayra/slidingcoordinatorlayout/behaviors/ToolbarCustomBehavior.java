@@ -32,8 +32,6 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
 
     private void initBehavior() {
         screenSizeHeight = ctx.getResources().getDisplayMetrics().heightPixels;
-//        startPoint = screenSizeHeight/2;
-//        endPoint = screenSizeHeight/2 + screenSizeHeight/4;
     }
 
     @Override
@@ -70,4 +68,5 @@ public class ToolbarCustomBehavior extends AppBarLayout.ScrollingViewBehavior {
         return true;
     }
 
+    //TODO: fix appbar drag
 }
